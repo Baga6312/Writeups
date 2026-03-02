@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "HTB/machines/AirTouch/AirTouch.md",
+                "file": "HTB/machines/Eighteen/eighteen.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "AirTouch"
+              "title": "eighteen"
             }
           }
         ]
@@ -169,14 +169,15 @@
   },
   "active": "8b8c80e0b6c034d2",
   "lastOpenFiles": [
+    "HTB/machines/Artificial/artificial.md",
+    "HTB/machines/Artificial/assets/Pasted image 20251017162502.png",
+    "HTB/machines/AirTouch/AirTouch.md",
     "HTB/machines/Eighteen/eighteen.md",
     "HTB/machines/EscapeTwo/escapeTwo.md",
-    "HTB/machines/AirTouch/AirTouch.md",
     "HTB/machines/AirTouch/assets/Pasted image 20260222204805.png",
     "HTB/machines/AirTouch/assets/Pasted image 20260222205131.png",
     "HTB/machines/AirTouch/assets/Pasted image 20260222205140.png",
     "HTB/machines/Titanic/titanic.md",
-    "HTB/machines/Artificial/artificial.md",
     "HTB/README.md",
     "HTB/machines/Titanic/assets/Pasted image 20250227135124.png",
     "HTB/machines/Titanic/assets/Pasted image 20250227134752.png",
@@ -184,7 +185,6 @@
     "HTB/machines/Titanic/assets/Pasted image 20250226192855.png",
     "HTB/machines/Titanic/assets/Pasted image 20250226191930.png",
     "HTB/machines/Titanic/assets/Pasted image 20250226191818.png",
-    "HTB/machines/Titanic/assets/Pasted image 20250226191555.png",
     "HTB/machines/Titanic/version.sh",
     "HTB/machines/Titanic/namp.txt",
     "HTB/machines/Titanic/hash.txt",
