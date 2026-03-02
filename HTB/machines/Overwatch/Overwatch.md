@@ -609,7 +609,7 @@ got it
 ```
 
 we evil-winrm and we get the user.txt 
-![[Pasted image 20260213174407.png]]
+<img src="assets/Pasted image 20260213174407.png">
 
 # Privelege escalation 
 
@@ -657,6 +657,6 @@ $factory.Close()
 ```
 
 and if we check we are part of the Admin group 
-![[Pasted image 20260214193642.png]]
+<img src="assets/Pasted image 20260214193642.png">
 
 and we can type the root.txt file 

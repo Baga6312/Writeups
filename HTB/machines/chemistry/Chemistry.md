@@ -22,15 +22,15 @@ some http server on port 5000
 
 its some CIF file analyser 
 
-![[Pasted image 20250130040249.png]]
+<img src="assets/Pasted image 20250130040249.png">
 
 registering will redirect us to this page .. which without further investigating appears that we can exploit it with some reverse shell and access the server 
 
-![[Pasted image 20250130045656.png]]
+<img src="assets/Pasted image 20250130045656.png">
 
 but we get some endpoints  `/upload`  , more investigating with burpsuite 
 
-![[Pasted image 20250130050214.png]]
+<img src="assets/Pasted image 20250130050214.png">
 
 ig it only accepts `.cif` files 
 # Analyse the .cif format file 
@@ -82,15 +82,15 @@ pip3 install pymatgen=2024.2.8 --break-system-packages
 
 voila 
 
-![[Pasted image 20250130061141.png]]
+<img src="assets/Pasted image 20250130061141.png">
 
 now we can generate a reverse shell with https://www.revshells.com/ 
 
-![[Pasted image 20250130061407.png]]
+<img src="assets/Pasted image 20250130061407.png">
 
 we upload the file with the reverse shell and now we have a shell 
 
-![[Pasted image 20250130062638.png]]
+<img src="assets/Pasted image 20250130062638.png">
 
 upgrade from simple shell to an interactive shell (Recommanded in every machine u play )
 
@@ -100,33 +100,33 @@ python3 -c 'import pty; pty.spawn("/bin/bash")'
 
 now we get to the real work . we have rosa user and ofc we dont have permession for the home folder 
 
-![[Pasted image 20250130063429.png]]
+<img src="assets/Pasted image 20250130063429.png">
 
 and we have a `database.db` file under instance .. lets try it 
 
-![[Pasted image 20250130064817.png]]
+<img src="assets/Pasted image 20250130064817.png">
 
 list of hashes and hash of rosa among them , ill c rack it with crackstation cuz its easy and online 
 
-![[Pasted image 20250130064935.png]]
+<img src="assets/Pasted image 20250130064935.png">
 
 we have password , lets validate it 
 
-![[Pasted image 20250130065305.png]]
+<img src="assets/Pasted image 20250130065305.png">
 
 rosa:unicorniosrosados 
 user.txt : 701936ae5503aa56dffdf9646166e79b 
 # Privilege Escalation 
 lets elevate our writes to root for the root flag 
 
-![[Pasted image 20250130065612.png]]
+<img src="assets/Pasted image 20250130065612.png">
 
 i would like to try some linpease but its soo verbose and theres so many output ..  so ill skip to the result 
 
 in the /opt folder theres a `monitoring_site`  we dont have the right to it cuz its under root .. thats a good thing .. so we have to find a way to it . 
 theres smthing running localy on port 8080 
 
-![[Pasted image 20250130070243.png]]
+<img src="assets/Pasted image 20250130070243.png">
 
 forward it to ur local machine 
 
@@ -134,11 +134,11 @@ forward it to ur local machine
 ssh -L 8080:localhost:8080 rosa@10.10.11.38
 ```
 
-![[Pasted image 20250130070508.png]]
+<img src="assets/Pasted image 20250130070508.png">
 
 enumerating this monitoring website . maybe we can find something . since the folder under root user so it must run under root 
 
-![[Pasted image 20250130071853.png]]
+<img src="assets/Pasted image 20250130071853.png">
 
 aiohttp/3.9.1 server 
 after some digging i found an exploit for that (https://github.com/z3rObyte/CVE-2024-23334-PoC) 

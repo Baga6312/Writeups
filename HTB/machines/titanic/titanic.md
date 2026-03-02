@@ -99,17 +99,17 @@ following to the page  `titanic.htb`  .. clicking the button `book now` will pro
 
 further investigation with burp 
 
-![[Pasted image 20250226191212.png]]
+<img src="assets/Pasted image 20250226191212.png">
 
 i wonder if theres other endpoints 
-![[Pasted image 20250226191331.png]]
+<img src="assets/Pasted image 20250226191331.png">
 
 download link !! lets abuse it 
 first it download a json file with our ticket 
 
-![[Pasted image 20250226191555.png]]
+<img src="assets/Pasted image 20250226191555.png">
 
-![[Pasted image 20250226191818.png]]
+<img src="assets/Pasted image 20250226191818.png">
 
 ```
 root:x:0:0:root:/root:/bin/bash
@@ -154,7 +154,7 @@ whoa !! that was easy
 so we have the user developer , 
 no other dirs or subdomains 
 ig thats our first flag 
-![[Pasted image 20250226192855.png]]
+<img src="assets/Pasted image 20250226192855.png">
 
 # PrivilageEscallation 
 i found a subdomain under `/etc/hosts`
@@ -175,14 +175,14 @@ adding it to our hosts file
 echo "10.10.11.55       dev.titanic.htb"  > /etc/hosts 
 ```
 
-![[Pasted image 20250227134752.png]]
+<img src="assets/Pasted image 20250227134752.png">
 
 current version of Gitea is 1.22.1
 keeping that in mind , we see our user developer made 2 repos and theres the administrator user 
 `flask-app` and `dockerconfig`
 
 theres an sql server running on port `3306`  and theres some creds 
-![[Pasted image 20250227135124.png]]
+<img src="assets/Pasted image 20250227135124.png">
 nmap didnt detect that port first but now it does .. mistake from me forgot to put the `-p` flag 
 but its closed mean its running locally 
 so its mean we are dealing with some sql database and we can find some sqli vurnability in the gitea app since the gitea container and mysql are on the same repo 

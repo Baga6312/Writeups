@@ -25,7 +25,7 @@ $sudo echo "10.10.11.58      dog.htb" > /etc/hosts
 
 we have something on the web  
 
-![[Pasted image 20250406065318.png]]
+<img src="assets/Pasted image 20250406065318.png">
 
 Dogs website . cool ! 
 running a `whatweb` check 
@@ -93,13 +93,13 @@ we have something in  `/core` `/files` `/.git` `/robots.txt`
 the `/.git`  and `/core`  appear to have something  
 `/core` : File directory 
 
-![[Pasted image 20250406070648.png]]
+<img src="assets/Pasted image 20250406070648.png">
 Appear to be the source code of [backdrop CMS](https://github.com/backdrop/backdrop)
 
 # Exploitaiton 
 the `/.git` appears to be a git repo .. reconstructing it with [githacks](https://github.com/lijiejie/GitHack) 
 
-![[Pasted image 20250406073554.png]]
+<img src="assets/Pasted image 20250406073554.png">
 
 already done everything .. after investingating the `/core`  folder i found out this under the `update.php` 
 
@@ -136,7 +136,7 @@ $cat /files/config_83dddd18e1ec67fd8ff5bba2453c7fb3/active/update.settings.json
 some users called tiffany 
 
 if we try these creds `tiffany:BackDropJ2024DS2024`   on the backdrops CMS we authenticate 
-![[Pasted image 20250407045856.png]]
+<img src="assets/Pasted image 20250407045856.png">
 
 
 searching for some exploit find this one https://www.exploit-db.com/exploits/52021 
@@ -152,15 +152,15 @@ Go to http://dog.htb/admin/modules/install and upload the shell.zip for Manual I
 
 for our case , the CMS doesnt accept normal file under  `http://dog.htb/?q=admin/installer/manual` when we do manual install so we have to convert `shell` folder into a `.tar.gz` file and upload it 
 
-![[Pasted image 20250407100527.png]]
+<img src="assets/Pasted image 20250407100527.png">
 succefully installed now we can go to the `http://dog.htb/modules/shell/shell.php
 ` like it said in the instruction 
 
 for more enumeration we found other users like this 
-![[Pasted image 20250407100807.png]]
+<img src="assets/Pasted image 20250407100807.png">
 
 trying to ssh with the password we found intially 
-![[Pasted image 20250407100958.png]]
+<img src="assets/Pasted image 20250407100958.png">
 boom we have a shell now 
 retrieving the user flag 
 

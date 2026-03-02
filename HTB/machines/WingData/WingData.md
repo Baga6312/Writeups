@@ -20,17 +20,17 @@ Service detection performed. Please report any incorrect results at https://nmap
 ```
 
 checking port 80 
-![[Pasted image 20260215160320.png]]
+<img src="assets/Pasted image 20260215160320.png">
 
 subdomain on client protal 
 
 ``ftp.wingdata.htb`
 
-![[Pasted image 20260215160455.png]]
+<img src="assets/Pasted image 20260215160455.png">
 
 searchploit revealed this 
-![[Pasted image 20260215160534.png]]
-![[Pasted image 20260215160609.png]]
+<img src="assets/Pasted image 20260215160534.png">
+<img src="assets/Pasted image 20260215160609.png">
 flawless 
 
 # Post Exploitation
@@ -149,7 +149,7 @@ ok now we crack it
 
 now we ssh to wacky 
 
-![[Pasted image 20260215162207.png]]
+<img src="assets/Pasted image 20260215162207.png">
 # Priv Escalation 
 
 linux_exploit_suggestor gave us multiple vernability on the system but none of them worked 
@@ -232,6 +232,6 @@ sudo /usr/local/bin/python3 /opt/backup_clients/restore_backup_clients.py -b bac
 ssh -o StrictHostKeyChecking=no -i /tmp/rootkey root@127.0.0.1 'whoami && cat /root/root.txt'
 ```
 
-![[Pasted image 20260215163047.png]]
+<img src="assets/Pasted image 20260215163047.png">
 
 and we done 

