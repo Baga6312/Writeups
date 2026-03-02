@@ -27,8 +27,8 @@ we have something on the web
 
 <img src="assets/Pasted image 20250406065318.png">
 
-Dogs website . cool ! 
-running a `whatweb` check 
+Dogs website . cool ! running a `whatweb` check 
+
 ```bash
 ┌──(kali㉿kali)-[~/…/CTF/HTB/machines/dog]
 └─$ whatweb  dog.htb       
@@ -94,6 +94,7 @@ the `/.git`  and `/core`  appear to have something
 `/core` : File directory 
 
 <img src="assets/Pasted image 20250406070648.png">
+
 Appear to be the source code of [backdrop CMS](https://github.com/backdrop/backdrop)
 
 # Exploitaiton 
@@ -136,8 +137,8 @@ $cat /files/config_83dddd18e1ec67fd8ff5bba2453c7fb3/active/update.settings.json
 some users called tiffany 
 
 if we try these creds `tiffany:BackDropJ2024DS2024`   on the backdrops CMS we authenticate 
-<img src="assets/Pasted image 20250407045856.png">
 
+<img src="assets/Pasted image 20250407045856.png">
 
 searching for some exploit find this one https://www.exploit-db.com/exploits/52021 
 
@@ -153,19 +154,25 @@ Go to http://dog.htb/admin/modules/install and upload the shell.zip for Manual I
 for our case , the CMS doesnt accept normal file under  `http://dog.htb/?q=admin/installer/manual` when we do manual install so we have to convert `shell` folder into a `.tar.gz` file and upload it 
 
 <img src="assets/Pasted image 20250407100527.png">
+
 succefully installed now we can go to the `http://dog.htb/modules/shell/shell.php
 ` like it said in the instruction 
 
 for more enumeration we found other users like this 
+
 <img src="assets/Pasted image 20250407100807.png">
 
 trying to ssh with the password we found intially 
+
 <img src="assets/Pasted image 20250407100958.png">
+
 boom we have a shell now 
 retrieving the user flag 
 
 user.txt :  09879539d5be3b772db3f3922d16083f 
+
 # PrivEscalation
+
 trying to get the root flag now .. 
 
 we can use some of the linpease script but i prefer not to cuz its too verbose , so looking manually would be easier then looking thru a tons of logs 
@@ -184,6 +191,7 @@ we can run sudo for a binarry called `bee`
 its a command utility that allows user to intercat with the CMS 
 
 further investigation we have some ports that are running locally 
+
 ```bash 
 johncusack@dog:~$ ss -tulpn 
 udp      UNCONN    0         0          127.0.0.53%lo:53        0.0.0.0:*  
@@ -224,4 +232,3 @@ fbbec2f89e831c6d29db5e496e2dead4
 ```
 
 root.txt :  fbbec2f89e831c6d29db5e496e2dead4 
-[[machines]]

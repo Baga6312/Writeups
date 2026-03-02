@@ -20,6 +20,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 ```
 
 checking port 80 
+
 <img src="assets/Pasted image 20260215160320.png">
 
 subdomain on client protal 
@@ -29,8 +30,10 @@ subdomain on client protal
 <img src="assets/Pasted image 20260215160455.png">
 
 searchploit revealed this 
+
 <img src="assets/Pasted image 20260215160534.png">
 <img src="assets/Pasted image 20260215160609.png">
+
 flawless 
 
 # Post Exploitation
@@ -150,6 +153,7 @@ ok now we crack it
 now we ssh to wacky 
 
 <img src="assets/Pasted image 20260215162207.png">
+
 # Priv Escalation 
 
 linux_exploit_suggestor gave us multiple vernability on the system but none of them worked 

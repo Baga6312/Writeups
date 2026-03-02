@@ -27,15 +27,15 @@ adding the domain to our `/etc/hosts `
 
 simple ass looking ui  
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251017162502.png">
+<img src="./assets/Pasted image 20251017162502.png">
 
 registering a new account and logging in with it 
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251017162718.png">
+<img src="./assets/Pasted image 20251017162718.png">
 
 this will lead us to the page where it present us with this .. 
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251017162855.png">
+<img src="./assets/Pasted image 20251017162855.png">
 
 checking the `requirement.txt` and `Dockerfile` 
 
@@ -99,44 +99,47 @@ python3 exploit.py
 
 opening a listener on our machine 
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251017165134.png">
+<img src="./assets/Pasted image 20251017165134.png">
 
 and finally importing our model will give us a shell 
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251017184622.png">
+<img src="./assets/Pasted image 20251017184622.png">
 
 it didnt work ... 
 
 <hr>
 
 after digging a lil bit i found out the reason , it appeared that i need to boot up an entier container with that specific `Dockerfile` so just i can generate that `.h5` file 
-```
+
+```bash
 docker build -t tensorflow-app .
 ```
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251018164048.png">
+<img src="./assets/Pasted image 20251018164048.png">
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251018164228.png">
+<img src="./assets/Pasted image 20251018164228.png">
 
 an copying it to our machine , its a tedious task for me cuz i m doing everything from WSL , but first copying it from the container , and here the command if someone need it 
-```
+
+```bash
 sudo docker cp 1b420c3ceba3:/code/exploit.h5 ./exploit.h5
 ```
 
 uploading the model and done :)) , we got a shell 
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251018164755.png">
+<img src="./assets/Pasted image 20251018164755.png">
+
 ## PrivEscalation 
 
 we start the usual with making a fully interactive shell 
-```
+```bash
 script /dev/null -c bash
 export TERM=xterm
 ```
 
 we found another user called `gael` , and from i found something in the `/opt` folder 
 
-```
+```bash
 total 36
 drwxr-xr-x   8 root root 4096 Oct 18 10:39 .
 drwxr-xr-x  18 root root 4096 Mar  3  2025 ..
@@ -148,9 +151,10 @@ drwx------   2 root root 4096 Oct 18 10:39 keys
 drwx------   2 root root 4096 Oct 18 10:52 locks
 drwx------   2 root root 4096 Oct 18 10:39 snapshots
 ```
+
 it appears like structure for something , but nothing interresting , altho , i found a local port open 
 
-```
+```bash
 app@artificial:/opt$ ss -tulpn
 ss -tulpn
 Netid   State    Recv-Q   Send-Q     Local Address:Port     Peer Address:Port   Process
@@ -164,7 +168,7 @@ tcp     LISTEN   0        511                 [::]:80               [::]:*
 tcp     LISTEN   0        128                 [::]:22               [::]:*
 ```
 
-```
+```bash
 app        22263  0.4 10.6 876352 425172 ?       Sl   15:18   0:13 /usr/bin/python3 /usr/bin/gunicorn -w 4 --error-logfile /dev/null --access-logfile /dev/null app:app -b 127.0.0.1:5000
 app        56293  0.0  0.0   6300   716 pts/3    S+   16:08   0:00 grep --color=auto 22263
 ```
@@ -173,27 +177,29 @@ and i alsofound this `users.db` file
 
 theres two tables 
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251018171309.png">
+<img src="./assets/Pasted image 20251018171309.png">
 
 and look at that.. we found hash for `gael`
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251018171439.png">
+<img src="./assets/Pasted image 20251018171439.png">
 
 cracking that hash in crackstation getting us this 
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251018171610.png">
+<img src="./assets/Pasted image 20251018171610.png">
 
 trying that `mattp005numbertwo` password on `gael` 
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251018172046.png">
+<img src="./assets/Pasted image 20251018172046.png">
+
 ## Root 
 
 i missed a port i found earlier , it was on `8989` , after forwarding it ,it got me this 
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251018172751.png">
+<img src="./assets/Pasted image 20251018172751.png">
 
 yeah whever , gael creds didnt work and the creds are stored on the config file which is protected by `root` , altho , theres a folder `backrest` that we can read 
-```
+
+```bash
 total 51116
 drwxr-xr-x 5 root root         4096 Oct 18 16:30 .
 drwxr-xr-x 8 root root         4096 Oct 18 10:39 ..
@@ -212,7 +218,7 @@ drwxr-xr-x 3 root root         4096 Oct 18 16:30 tasklogs
 
 hold up !! theres the resitic command which is a backup binary .. so there must be a backup but where ?? 
 
-```
+```bash
 gael@artificial:/var/backups$ ls -al
 total 51972
 drwxr-xr-x  2 root root     4096 Oct 18 06:25 .
@@ -239,7 +245,7 @@ find / -perm g=r -group sysadm 2>/dev/null
 
 since we are part of group called `sysadmin`
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251019154437.png">
+<img src="./assets/Pasted image 20251019154437.png">
 
 and we found it , creds for backrest are `backrest_root` and that looks like a base64 , converting it giving us this 
 
@@ -248,15 +254,15 @@ $2a$10$cVGIy9VMXQd0gM5ginCmjei2kZR/ACMMkSsspbRutYP58EBZz/0QO
 ```
 
 decrypting it with `john` giving us this ?
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251019155116.png">
+<img src="./assets/Pasted image 20251019155116.png">
 well anyway we have `backrest_root` and `!@#$%^` , moving on to get a shell as root
 
 it does not seem to have known privilage escalation exploit this version of backrest so we have to find it ourself 
 
 creating a simple repo will get us this 
 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251019160343.png">
+<img src="./assets/Pasted image 20251019160343.png">
 trying to create a repo , i found one of the hooks has `command` variable 
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/artificial/assets/Pasted image 20251019161155.png">
+<img src="./assets/Pasted image 20251019161155.png">
 
 doesnt look suspicious to me , 

@@ -38,7 +38,9 @@ looking at port 80/443
 <img src="assets/Pasted image 20260222004147.png">
 
 and the ``webstart.jnlp`` revealed that its running the mirth soft `4.4.0` 
+
 <img src="assets/Pasted image 20260222004313.png">
+
 the msfconsole exploit didnt work like always but revealed the CVE number 
 
 <img src="assets/Pasted image 20260221225616.png">
@@ -132,7 +134,7 @@ EOF
 ```
 
 and here it is 
-<img src="assets/Pasted image 20260222012050.png">
 
+<img src="assets/Pasted image 20260222012050.png">
 
 <img src="assets/Pasted image 20260222012102.png">

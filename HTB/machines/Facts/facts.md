@@ -148,7 +148,10 @@ Finished
 ```
 
 altho nikto revealed these endpoints 
-<img src="assets/Pasted image 20260201160447.png">/admin.cgi 
+
+<img src="assets/Pasted image 20260201160447.png">
+
+/admin.cgi 
 
 visiting the link resirected us to ``/admin/login`` , i tried `/admin/register` and it returned registration form, gave idea to fuzz the `admin` endpoint 
 
@@ -185,9 +188,13 @@ login.jhtml             [Status: 200, Size: 3914, Words: 669, Lines: 85, Duratio
 ```
 
 nothing much .. so we back to register 
+
 <img src="assets/Pasted image 20260201161033.png">
+
 and we are admin ?? that ez ?, ok we go on 
+
 <img src="assets/Pasted image 20260201161114.png">
+
 camaleon CMS 2.9.0 
 the cms is vunrable to Mass Assignment vurnability . `[CVE-2025-2304](https://www.tenable.com/cve/CVE-2025-2304)`
 
@@ -211,17 +218,25 @@ An attacker can exploit this vulnerability by submitting a request with an extra
 we open up burpsuite and get the request from there on changing our passwords 
 
 <img src="assets/Pasted image 20260201170949.png">
+
 profile 
+
 <img src="assets/Pasted image 20260201171010.png">
 
 change password 
 
 <img src="assets/Pasted image 20260201171024.png">
 
-on burpsuite <img src="assets/Pasted image 20260201171057.png">
+on burpsuite 
+
+<img src="assets/Pasted image 20260201171057.png">
+
 this is not enough we need to get the new auth_token from browser and replace it with a newer password and the `role=admin`
+
 <img src="assets/Pasted image 20260201171205.png">
+
 and we are administrator 
+
 <img src="assets/Pasted image 20260201171455.png">
 
 searching more on the camaleon cms we found this https://sca.analysiscenter.veracode.com/vulnerability-database/security/1/1/sid-48904/summary
@@ -247,7 +262,7 @@ checking william `.ssh` folder we found nothing altho trivia has the `authorized
 
 and we got a key .. trying to ssh with that getting us a password to authenticate 
 
-```
+```bash
 ┌──(kali㉿kali)-[~/repo/season10/facts]
 └─$ chmod 600 id_ed25519 
 
@@ -259,12 +274,14 @@ Enter passphrase for key 'id_ed25519':
 we crack it with ``ssh2john`` and we found it 
 
 <img src="assets/Pasted image 20260201181112.png">
+
 we are in 
+
 <img src="assets/Pasted image 20260201181144.png">
 
 # priv escalation 
 
-```
+```bash
 sudo -l 
 Matching Defaults entries for trivia on facts:
     env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
