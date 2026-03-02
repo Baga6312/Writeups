@@ -324,6 +324,7 @@ sudo aireplay-ng -0 0 -a F0:9F:C2:A3:F1:A7 wlan0mon
 until u see `EAPOL` means we deauthet the client connected to that network and we captured the handshake containing the hash for the wifi 
 
 <img src="./assets/Pasted image 20260222210249.png">
+
 <img src="./assets/Pasted image 20260222210307.png">
 
 we dont have rockyout on the system so its easier to uplaod the file on our machine then we crack using airckrack 
@@ -335,6 +336,7 @@ aircrack-ng capture-01.cap -w /usr/share/wordlists/rockyou.txt
 and we found it 
 
 <img src="./assets/Pasted image 20260222210510.png">
+
 so here there was a compilcation at first . wpa_supplicant still in use even after u kill the monitor interface with 
 
 ```bash 
@@ -427,6 +429,8 @@ airdecap-ng -e "AirTouch-Internet" -p challenge capture-01.cap
 ```
 
 this gave us this `capture-01-dec.cap` and we open it with wireshark ofc and we got a session cookie 
+
+
 <img src="./assets/Pasted image 20260222213545.png">
 
 we put it on our browser 
@@ -463,6 +467,7 @@ but we need root first , but nvm we can exec the sudo command anyway
 and we finaly got user.txt .. wat the hell !!! 
 
 and we have route to corp now
+
 <img src="./assets/Pasted image 20260222224738.png">
 
 # Priv escalation 
@@ -504,6 +509,7 @@ sudo airodump-ng --bssid F0:9F:C2:A3:F1:A7 wlan3mon
 ```
 
 <img src="./assets/Pasted image 20260224135650.png">
+
 thats the tablet, now we quit the monotoring and kick it 
 
 ```bash 
@@ -519,6 +525,7 @@ sudo airodump-ng --band abg wlan3mon
 this totally worked 
 
 <img src="./assets/Pasted image 20260224220509.png">
+
 now we launch the server on channel 44 with that bssid 
 
 ```bash 
@@ -605,9 +612,11 @@ Nmap done: 256 IP addresses (2 hosts up) scanned in 14.55 seconds
 ```
 
 looking at the files before on the AP .. we have creds left there for connection we use them to ssh 
+
 <img src="./assets/Pasted image 20260224224246.png">
 
 and we are in 
+
 <img src="./assets/Pasted image 20260224224631.png">
 
 now the final phase . getting to root , we found another user `admin` , i went the thru the hustle of uploading linpeas to the new machine and found a critical hostapd file that stores the creds connected on the system 
