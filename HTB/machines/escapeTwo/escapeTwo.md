@@ -188,7 +188,7 @@ MSSQL       10.10.11.51     1433   DC01             IAcceptSQLServerLicenseTerms
 
 the creds for sql_svc
  
- ```
+```
 SQLSVCACCOUNT="SEQUEL\sql_svc
 SQLSVCPASSWORD="WqSZAF6CysDQbGb3
 ```
@@ -226,7 +226,8 @@ c515575b843720e73ba9a56a5cfcb38e
 *Evil-WinRM* PS C:\Users\ryan\Desktop> 
 ```
 
-#PrivilageEscallation 
+
+# PrivilageEscallation 
 
 privi escalation time now ,  theres a folder called gg in the document folder  and theres some tools like *BloodHound* 
 
